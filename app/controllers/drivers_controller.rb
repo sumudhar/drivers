@@ -13,13 +13,16 @@ class DriversController < ApplicationController
   # PATCH/PUT /drivers/1.json
   def location_update
     location ={}
-    location['accuracy'] = params[:driver_params][:accuracy]
-    location['longitude'] = params[:driver_params][:longitude]
-    location['latitude'] = params[:driver_params][:latitude]
-    #binding.pry
-      unless @driver.nil?
+    if params[:driver_params].present?
+      location['accuracy']  = params[:driver_params][:accuracy]
+      location['longitude'] = params[:driver_params][:longitude]
+      location['latitude']  = params[:driver_params][:latitude]
+    else
+      return  render  json: "Location details are not found".as_json, status: :unprocessable_entity
+    end
+    unless @driver.nil?
         # check the location is exists or not ..
-         unless @driver.location.nil?
+      unless @driver.location.nil?
            @driver.build_location(location)
          else
            @driver.update_attributes(location_attributes:  location)
@@ -31,7 +34,7 @@ class DriversController < ApplicationController
          end
       else
         render json: "Record not Found".as_json, status: :not_found
-      end
+    end
   end
 
   private
