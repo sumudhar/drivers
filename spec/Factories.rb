@@ -14,5 +14,13 @@ FactoryGirl.define do
     accuracy 0.6
   end
 
+  factory :valid_location, class: Location do |a|
+    latitude 3.5
+    longitude 11.7
+    accuracy 0.2
+    association :driver, :factory=>:driver
+  end
+
+
 
 end

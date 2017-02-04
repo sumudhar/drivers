@@ -4,6 +4,7 @@ RSpec.describe Driver, type: :model do
 
   before :each do
     @driver = FactoryGirl.build(:driver)
+
   end
 
   after :each do
