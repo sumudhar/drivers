@@ -22,18 +22,16 @@ class DriversController < ApplicationController
     end
     unless @driver.nil?
         # check the location is exists or not ..
-      unless @driver.location.nil?
-           @driver.build_location(location)
+      if @driver.location.nil?
+          @driver.build_location(location)
       else
-           @driver.update_attributes(location_attributes:  location)
+          @driver.update_attributes(location_attributes:  location)
       end
-         if @driver.save
-          render body: nil, status: :ok
-         else
-          render json: @driver.errors.as_json, status: :unprocessable_entity
-         end
-      else
-        render json: "Record not Found".as_json, status: :not_found
+    end
+    if @driver.save
+      render body: nil, status: :ok
+    else
+      render json: @driver.errors.as_json, status: :unprocessable_entity
     end
   end
 

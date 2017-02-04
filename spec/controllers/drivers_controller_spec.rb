@@ -136,6 +136,7 @@ RSpec.describe DriversController, type: :controller do
     it "should throw error if driver not exists" do
       put :location_update, params: {id: 000, driver_params: {"latitude"=>"12.971", "longitude"=>"77.59", "accuracy"=>"0.7"}}
       expect(response.status).to eq(404)
+      expect(response.body).to eq("Record Not Found")
     end
 
 
