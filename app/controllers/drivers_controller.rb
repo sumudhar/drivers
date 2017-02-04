@@ -1,24 +1,37 @@
 class DriversController < ApplicationController
-  before_action :set_driver, only: [:show, :edit, :update, :destroy]
+  before_action :set_driver, only: [:location_update]
   respond_to :json
 
-  # GET /drivers
+
   # GET /drivers.json
-  def index
+  def drivers_list
     @drivers = Driver.all
   end
 
 
   # PATCH/PUT /drivers/1
   # PATCH/PUT /drivers/1.json
-  def update
-    respond_to do |format|
-      if @driver.update(driver_params)
-        format.json { render :show, status: :ok, location: @driver }
+  def location_update
+    location ={}
+    location['accuracy'] = params[:driver_params][:accuracy]
+    location['longitude'] = params[:driver_params][:longitude]
+    location['latitude'] = params[:driver_params][:latitude]
+    binding.pry
+      unless @driver.nil?
+        # check the location is exists or not ..
+         unless @driver.location.nil?
+           @driver.build_location(location)
+         else
+           @driver.update_attributes(location_attributes:  location)
+         end
+         if @driver.save
+           render status: :ok
+         else
+          render json: @driver.errors.as_json, status: :unprocessable_entity
+         end
       else
-        format.json { render json: @driver.errors, status: :unprocessable_entity }
+        render json: "Record not Found".as_json, status: :not_found
       end
-    end
   end
 
   private
@@ -28,7 +41,7 @@ class DriversController < ApplicationController
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def driver_params
-      params.require(:driver).permit(:last_name, :first_name, :phone)
-    end
+    # def driver_params
+    #   params.require(:driver).permit(:last_name, :first_name, :phone,:location)
+    # end
 end

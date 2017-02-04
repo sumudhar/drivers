@@ -5,3 +5,8 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+1.upto(50000) do |i|
+  Driver.create({first_name: 'driver', last_name: i ,phone: 9000000000+i})
+  puts "Driver #{i} creating"
+end
