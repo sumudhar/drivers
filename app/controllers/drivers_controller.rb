@@ -24,9 +24,9 @@ class DriversController < ApplicationController
         # check the location is exists or not ..
       unless @driver.location.nil?
            @driver.build_location(location)
-         else
+      else
            @driver.update_attributes(location_attributes:  location)
-         end
+      end
          if @driver.save
            render status: :ok
          else
@@ -40,7 +40,7 @@ class DriversController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_driver
-      @driver = Driver.find(params[:id])
+       @driver = Driver.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

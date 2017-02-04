@@ -24,11 +24,8 @@ RSpec.describe DriversController, type: :controller do
   # This should return the minimal set of attributes required to create a valid
   # Driver. As you add validations to Driver, be sure to
   # adjust the attributes here as well.
- # let(:driver){
- #   first_name:
- #
- #
- # }
+
+  #let(:valid_attributes) {attributes_for(:driver, location_attributes: attributes_for(:location))}
 
   # let(:invalid_attributes) {
   #   skip("Add a hash of attributes invalid for your model")
@@ -51,43 +48,47 @@ RSpec.describe DriversController, type: :controller do
   #
   describe "PUT #location_update" do
 
+    before :each do
+      @driver = FactoryGirl.create(:driver)
+    end
+
     it "should return Location details are not found with code 422 " do
-      driver = FactoryGirl.create(:driver)
-      put :location_update, params: {id: driver.to_param, driver_params:[]}
+      #driver = FactoryGirl.create(:driver)
+      put :location_update, params: {id: @driver.to_param, driver_params:[]}
       expect(response.status).to eq(422)
       expect(response.body).to eq("Location details are not found")
     end
 
     it "should return Location details are not found with code 422 " do
-      driver = FactoryGirl.create(:driver)
-      put :location_update, params: {id: driver.to_param, driver_params:{}}
+      #driver = FactoryGirl.create(:driver)
+      put :location_update, params: {id: @driver.to_param, driver_params:{}}
       expect(response.status).to eq(422)
       expect(response.body).to eq("Location details are not found")
     end
 
     it "updates the requested driver location" do
-          driver = FactoryGirl.create(:driver)
-          put :location_update, params: {id: driver.to_param, driver_params:{"latitude"=>"12.971", "longitude"=>"77.59", "accuracy"=>"0.7"}}
+          #driver = FactoryGirl.create(:driver)
+          put :location_update, params: {id: @driver.to_param, driver_params:{"latitude"=>"12.971", "longitude"=>"77.59", "accuracy"=>"0.7"}}
           expect(response.status).to eq(200)
     end
 
     it "should return accuracy can't be blank with code 422" do
-      driver = FactoryGirl.create(:driver)
-      put :location_update, params: {id: driver.to_param, driver_params:{"latitude"=>"12.971", "longitude"=>"77.59"}}
+      #driver = FactoryGirl.create(:driver)
+      put :location_update, params: {id: @driver.to_param, driver_params:{"latitude"=>"12.971", "longitude"=>"77.59"}}
       expect(response.status).to eq(422)
       expect(response.body).to eq("{\"location.accuracy\":[\"can't be blank\"],\"location\":[\"is invalid\"]}")
     end
 
     it "should return longitude can't be blank with code 422 " do
-      driver = FactoryGirl.create(:driver)
-      put :location_update, params: {id: driver.to_param, driver_params:{"latitude"=>"12.971", "accuracy"=>"0.7"}}
+      #driver = FactoryGirl.create(:driver)
+      put :location_update, params: {id: @driver.to_param, driver_params:{"latitude"=>"12.971", "accuracy"=>"0.7"}}
       expect(response.status).to eq(422)
       expect(response.body).to eq("{\"location.longitude\":[\"can't be blank\",\"is not a number\"],\"location\":[\"is invalid\"]}")
     end
 
     it "should return latitude can't be blank with code 422 " do
-      driver = FactoryGirl.create(:driver)
-      put :location_update, params: {id: driver.to_param, driver_params:{"accuracy"=>"0.7","longitude"=>"77.59"}}
+      #driver = FactoryGirl.create(:driver)
+      put :location_update, params: {id: @driver.to_param, driver_params:{"accuracy"=>"0.7","longitude"=>"77.59"}}
       expect(response.status).to eq(422)
       expect(response.body).to eq("{\"location.latitude\":[\"can't be blank\",\"is not a number\"],\"location\":[\"is invalid\"]}")
     end
@@ -95,31 +96,46 @@ RSpec.describe DriversController, type: :controller do
 
 
     it "should not update the driver location with invalid latitude with more than 90 " do
-      driver = FactoryGirl.create(:driver)
-      put :location_update, params: {id: driver.to_param, driver_params:{"latitude"=>"100.971", "longitude"=>"77.59", "accuracy"=>"0.7"}}
+      #driver = FactoryGirl.create(:driver)
+      put :location_update, params: {id: @driver.to_param, driver_params:{"latitude"=>"100.971", "longitude"=>"77.59", "accuracy"=>"0.7"}}
       expect(response.status).to eq(422)
       expect(response.body).to eq("{\"location.latitude\":[\"must be less than or equal to 90\"],\"location\":[\"is invalid\"]}")
     end
 
     it "should not update the driver location with invalid longitude with more than 180 " do
-      driver = FactoryGirl.create(:driver)
-      put :location_update, params: {id: driver.to_param, driver_params:{"latitude"=>"12.971", "longitude"=>"180.59", "accuracy"=>"0.7"}}
+      #driver = FactoryGirl.create(:driver)
+      put :location_update, params: {id: @driver.to_param, driver_params:{"latitude"=>"12.971", "longitude"=>"180.59", "accuracy"=>"0.7"}}
       expect(response.status).to eq(422)
       expect(response.body).to eq("{\"location.longitude\":[\"must be less than or equal to 180\"],\"location\":[\"is invalid\"]}")
     end
 
     it "should not update the driver location with invalid latitude with less than 90 " do
-      driver = FactoryGirl.create(:driver)
-      put :location_update, params: {id: driver.to_param, driver_params:{"latitude"=>"-100.971", "longitude"=>"77.59", "accuracy"=>"0.7"}}
+      #driver = FactoryGirl.create(:driver)
+      put :location_update, params: {id: @driver.to_param, driver_params:{"latitude"=>"-100.971", "longitude"=>"77.59", "accuracy"=>"0.7"}}
       expect(response.status).to eq(422)
       expect(response.body).to eq("{\"location.latitude\":[\"must be greater than or equal to -90\"],\"location\":[\"is invalid\"]}")
     end
 
     it "should not update the driver location with invalid longitude with less than 180 " do
-      driver = FactoryGirl.create(:driver)
-      put :location_update, params: {id: driver.to_param, driver_params:{"latitude"=>"12.971", "longitude"=>"-180.59", "accuracy"=>"0.7"}}
+      #driver = FactoryGirl.create(:driver)
+      put :location_update, params: {id: @driver.to_param, driver_params:{"latitude"=>"12.971", "longitude"=>"-180.59", "accuracy"=>"0.7"}}
       expect(response.status).to eq(422)
       expect(response.body).to eq("{\"location.longitude\":[\"must be greater than or equal to -180\"],\"location\":[\"is invalid\"]}")
+    end
+
+    it "should update the  driver location " do
+      location = FactoryGirl.build(:location)
+      location.driver_id = @driver.id
+      location.save!
+      put :location_update, params: {id: @driver.to_param, driver_params: {"latitude"=>"12.971", "longitude"=>"77.59", "accuracy"=>"0.7"}}
+      expect(response.status).to eq(200)
+      @driver.reload
+      expect(@driver.location.latitude).not_to eql(location.latitude)
+    end
+
+    it "should throw error if driver not exists" do
+      put :location_update, params: {id: 000, driver_params: {"latitude"=>"12.971", "longitude"=>"77.59", "accuracy"=>"0.7"}}
+      expect(response.status).to eq(404)
     end
 
 
