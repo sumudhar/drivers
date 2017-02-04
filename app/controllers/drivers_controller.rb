@@ -28,7 +28,7 @@ class DriversController < ApplicationController
            @driver.update_attributes(location_attributes:  location)
       end
          if @driver.save
-           render status: :ok
+          render body: nil, status: :ok
          else
           render json: @driver.errors.as_json, status: :unprocessable_entity
          end
@@ -43,8 +43,5 @@ class DriversController < ApplicationController
        @driver = Driver.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    # def driver_params
-    #   params.require(:driver).permit(:last_name, :first_name, :phone,:location)
-    # end
+
 end
