@@ -1,0 +1,19 @@
+default: &default
+  adapter: mysql2
+  encoding: utf8
+  username: root
+  password: murali
+  host: 127.0.0.1
+  port: 3306
+
+development:
+  <<: *default
+  database: drivers_development
+
+test:
+  <<: *default
+  database: drivers_test
+
+production:
+  <<: *default
+  database: drivers_production
