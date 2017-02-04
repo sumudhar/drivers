@@ -16,7 +16,7 @@ class DriversController < ApplicationController
     location['accuracy'] = params[:driver_params][:accuracy]
     location['longitude'] = params[:driver_params][:longitude]
     location['latitude'] = params[:driver_params][:latitude]
-    binding.pry
+    #binding.pry
       unless @driver.nil?
         # check the location is exists or not ..
          unless @driver.location.nil?

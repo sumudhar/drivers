@@ -74,6 +74,23 @@ RSpec.describe DriversController, type: :controller do
       expect(response.status).to eq(422)
     end
 
+    it "should not update the driver location with invalid latitude " do
+      driver = FactoryGirl.create(:driver)
+      put :location_update, params: {id: driver.to_param, driver_params:{"latitude"=>"100.971", "longitude"=>"77.59", "accuracy"=>"0.7"}}
+      expect(response.status).to eq(422)
+      expect(response.body).to eq("{\"location.latitude\":[\"must be less than or equal to 90\"],\"location\":[\"is invalid\"]}")
+    end
+
+    it "should not update the driver location with invalid longitude " do
+      driver = FactoryGirl.create(:driver)
+      put :location_update, params: {id: driver.to_param, driver_params:{"latitude"=>"12.971", "longitude"=>"180.59", "accuracy"=>"0.7"}}
+      binding.pry
+      expect(response.status).to eq(422)
+      expect(response.body).to eq("{\"location.longitude\":[\"must be less than or equal to 180\"],\"location\":[\"is invalid\"]}")
+    end
+
+
+
 
   end
   # describe "PUT #location_update" do
