@@ -14,5 +14,16 @@ class Driver < ApplicationRecord
     self.first_name + self.last_name
   end
 
+   def self.get_details(driver)
+     #stores = Store.near([@current_lat, @current_lon], 10, :units => :km)
+     radius = driver['radius'].nil?? 500 : driver['radius']
+     no_of_records = driver['limit'].nil? ? 10 : driver['limit']
+     latitude,longitude = driver['latitude'],driver['longitude']
+     location = Location.near([latitude,longitude],radius)
+   end
+
+ private
+
+
 
 end
