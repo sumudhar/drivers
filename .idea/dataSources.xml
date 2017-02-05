@@ -6,7 +6,6 @@
       <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mysql://127.0.0.1:3306/drivers_development</jdbc-url>
       <user-name>root</user-name>
-      <user-password>dfc7dfdfdfd8dfcbdfc6dfc3</user-password>
       <libraries />
     </data-source>
     <data-source source="LOCAL" name="Rails drivers: test" uuid="b4717ca5-bef9-4e03-9542-d966af501037">
@@ -14,7 +13,6 @@
       <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mysql://127.0.0.1:3306/drivers_test</jdbc-url>
       <user-name>root</user-name>
-      <user-password>dfc7dfdfdfd8dfcbdfc6dfc3</user-password>
       <libraries />
     </data-source>
     <data-source source="LOCAL" name="Rails drivers: production" uuid="f724ff63-c439-4fd2-8c4b-fedf5f194950">
@@ -22,7 +20,6 @@
       <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mysql://127.0.0.1:3306/drivers_production</jdbc-url>
       <user-name>root</user-name>
-      <user-password>dfc7dfdfdfd8dfcbdfc6dfc3</user-password>
       <libraries />
     </data-source>
   </component>
