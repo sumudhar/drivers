@@ -9,21 +9,23 @@ class Driver < ApplicationRecord
 
   validates_associated :location
 
+  #scope get_distance_from_location  -> (long,lat){Location.distance(long,lat)}
 
   def name
     self.first_name + self.last_name
   end
 
    def self.get_details(driver)
-     #stores = Store.near([@current_lat, @current_lon], 10, :units => :km)
      radius = driver['radius'].nil?? 500 : driver['radius']
      no_of_records = driver['limit'].nil? ? 10 : driver['limit']
      latitude,longitude = driver['latitude'],driver['longitude']
-     location = Location.near([latitude,longitude],radius)
+     locations= Location.distance(longitude,latitude)
+     binding.pry
+     puts locations.size
+     driver_ids= locations.map{|x| x[:driver_id] if x[:distance]<= radius}.compact
+     drivers= Driver.where(id: driver_ids).limit(no_of_records)
    end
 
  private
-
-
 
 end

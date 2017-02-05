@@ -7,6 +7,11 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 1.upto(50000) do |i|
-  Driver.create({first_name: 'driver', last_name: i ,phone: 9000000000+i})
-  puts "Driver #{i} creating"
+    Driver.create({first_name: 'driver', last_name: i ,phone: 9000000000+i})
+    puts "Driver #{i} creating"
+    latitude = rand(-90.000000000...90.000000000)
+    longitude = rand(-180.000000000...180.000000000)
+    accuracy = rand(0.00 ..1.00)
+    Location.create({longitude: longitude,latitude: latitude ,accuracy: accuracy ,driver_id: i})
+    puts "Location #{i} creating"
 end

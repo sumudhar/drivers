@@ -29,9 +29,9 @@ RSpec.describe DriversController, type: :controller do
   describe "GET #drivers_list" do
     it "assigns all drivers as @drivers" do
       #driver = Driver.create! valid_attributes
-      get :drivers_list, params:  {longitude: 12.3 ,latitude: 13.5}
+      get :drivers_list, params:  {longitude:  71.7081357436 ,latitude: 12.06310470324}
       #binding.pry
-      #expect(assigns(:drivers)).to eq([driver])
+      #expect(assigns(:drivers)).to eq([driver]) |  
     end
   end
 

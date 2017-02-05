@@ -5,10 +5,10 @@ RSpec.describe Location, type: :model do
     @location = FactoryGirl.create(:valid_location)
   end
 
-  after :each do
-    # this test uses the db storage for uniqueness testing, so need to clean between runs
-    DatabaseCleaner.clean
-  end
+  # after :each do
+  #   # this test uses the db storage for uniqueness testing, so need to clean between runs
+  #   DatabaseCleaner.clean
+  # end
 
   describe "#valid" do
     it "should require longitude" do

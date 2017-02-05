@@ -3,6 +3,7 @@ class CreateLocations < ActiveRecord::Migration[5.0]
     create_table :locations do |t|
       t.decimal :longitude , precision: 15, scale: 10
       t.decimal :latitude , precision: 15, scale: 10
+      t.decimal :accuracy , precision: 8, scale: 3
       t.integer :driver_id
 
       t.timestamps
