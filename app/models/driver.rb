@@ -20,12 +20,23 @@ class Driver < ApplicationRecord
      no_of_records = driver['limit'].nil? ? 10 : driver['limit']
      latitude,longitude = driver['latitude'],driver['longitude']
      locations= Location.distance(longitude,latitude)
-     binding.pry
-     puts locations.size
-     driver_ids= locations.map{|x| x[:driver_id] if x[:distance]<= radius}.compact
-     drivers= Driver.where(id: driver_ids).limit(no_of_records)
+     driver_ids= Hash[locations.map{|x| [x[:driver_id],x[:distance]] if x[:distance]<= radius}.compact]
+     drivers= Driver.where(id: driver_ids.keys).limit(no_of_records)
+     result = []
+     drivers.each do |driver|
+       record = {id: driver.id ,longitude: driver.longitude ,latitude: driver.latitude ,distance:driver_ids[driver.id] }
+       result << record
+     end unless drivers.size==0
+    result
    end
 
+  def longitude
+   self.location.longitude
+  end
+
+  def latitude
+    self.location.latitude
+  end
  private
 
 end

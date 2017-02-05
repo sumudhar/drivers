@@ -5,26 +5,22 @@ class DriversController < ApplicationController
 
   # GET /drivers.json
   def drivers_list
-
-    #binding.pry
     request_obj = {}
     request_obj['longitude']= params[:longitude].to_f
     request_obj['latitude']= params[:latitude].to_f
     request_obj['radius']= params[:radius]
     request_obj['limit']= params[:limit]
-   # valid = is_request_valid?(request_obj)
     unless request_obj.blank?
       # filter that the request is valid or not
-      unless (request_obj['longitude'] >= -180 and request_obj['longitude'] <=180)
-        return render json: " Longitude should  be between [+/- 180]"
+      return render json: "Longitude should  be between [+/- 180]", status: :unprocessable_entity unless (-180.000000000...180.000000000).include?(request_obj['longitude'])
+      return render json: "Latitude should be  between [+/-90 ]", status: :unprocessable_entity   unless (-90.000000000...90.000000000).include?(request_obj['latitude'])
+      return render json: "Invalid request", status: :bad_request if request_obj['longitude']==0.0 and request_obj['latitude']==0.0
+      drivers = Driver.get_details(request_obj)
+      if drivers.size!=0
+         render json: drivers ,status: :ok
+      else
+         render json: nil,status: :ok
       end
-      unless (request_obj['latitude'] >= -90 and request_obj['latitude'] <=90)
-        return render json: " Latitude should be  between [+/-90 ]"
-      end
-       drivers = Driver.get_details(request_obj)
-      binding.pry
-    else
-      render json: "Invalid request".as_json, status: :bad_request
     end
   end
 
